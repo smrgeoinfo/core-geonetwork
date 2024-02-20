@@ -1300,7 +1300,7 @@
     </description>
   </element>
   <element name="cit:partyIdentifier">
-    <label>Identifier for the party</label>
+    <label>Agent ID</label>
     <description/>
   </element>
   <element name="cit:role" id="377.0">

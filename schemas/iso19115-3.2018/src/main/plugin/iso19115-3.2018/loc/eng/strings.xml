@@ -16,7 +16,6 @@
   <enum2> is not valid for the field </enum2>
   <enum3>Potential values are: </enum3>
 
-
   <understandResource>Information about the dataset</understandResource>
   <relatedResources>Related services and linked data</relatedResources>
   <techInfo>Technical information</techInfo>
@@ -26,19 +25,21 @@
   <temporalRef>Temporal information</temporalRef>
   <constraintInfo>Access constraint information</constraintInfo>
   <xml_iso19139>Save this metadata as an ISO19139 XML file</xml_iso19139>
-  <xml_iso19139Tooai_dc>Save this metadata as an OAI Dublin Core XML file
-  </xml_iso19139Tooai_dc>
+  <xml_iso19139Tooai_dc>Save this metadata as an OAI Dublin Core XML file </xml_iso19139Tooai_dc>
   <resourceLineageTab>Lineage</resourceLineageTab>
 
   <advanced>Full</advanced>
   <default>Simple</default>
   <simple>Simple</simple>
   <inspire>INSPIRE</inspire>
+  <ddeview>DeepTime Digital Earth</ddeview>
+  <!-- added -->
   <inspireTheme>INSPIRE themes</inspireTheme>
   <inspireThemeMandatory>INSPIRE themes*</inspireThemeMandatory>
   <resource>Resource</resource>
   <xml>XML</xml>
   <metadata>Metadata</metadata>
+  <test>Distribution information</test>
   <identificationInfo>Identification</identificationInfo>
   <distributionInfo>Distribution</distributionInfo>
   <dataQualityInfo>Quality</dataQualityInfo>
@@ -52,7 +53,66 @@
   <applicationSchemaInfo>Schema info</applicationSchemaInfo>
   <acquisitionInformation>Acquisition info</acquisitionInformation>
   <qualityMeasures>Q. measures</qualityMeasures>
+  <additionalDocumentation>Other documentation</additionalDocumentation>
 
+  <!-- dde ADDED -->
+  <lineageSummary>Text summary of resource lineage</lineageSummary>
+  <basicmetadata>Basic metadata</basicmetadata>
+  <ISOtopicCategory>ISO topic category</ISOtopicCategory>
+  <DDEtopicCategory-label>
+    <div class="row">
+      <div class="col-xs-offset-2 col-xs-8">
+        <p class="help-block">DDE extended topic category</p>
+      </div>
+    </div>
+  </DDEtopicCategory-label>
+  <horizontalRule>
+    <div> <p>_________________________________________________________________________________________</p>
+  </div>
+  </horizontalRule>
+  <DDEtopicCategory>DDE extended topic category</DDEtopicCategory>
+  <MetadataIdentifier>Metadata identifier</MetadataIdentifier>
+  <ResourceIdentifier>Resource identifier and authority</ResourceIdentifier>
+  <ISOresourceScope>ISO resource type</ISOresourceScope>
+  <DDEresourceType>DDE resource type</DDEresourceType>
+  <browseGraphic>Thumbnail image</browseGraphic>
+  <detail>Resource description details</detail>
+  <spatialInfo>Geospatial properties</spatialInfo>
+  <distributionFormat>Distribution format</distributionFormat>
+  <distributionAgent>Distribution agent</distributionAgent>
+  <transferOptions>Transfer options</transferOptions>
+  <spatialReference>Spatial reference system</spatialReference>
+  <levelOfDetail>Level of detail in spatial data</levelOfDetail>
+  <qualityReport>Data quality report</qualityReport>
+  <temporalExtent>Temporal extent</temporalExtent>
+ 
+  <temporalExtentName>Name of beginning (required) and end (optional) of temporal extent</temporalExtentName>
+  <temporalExtentIdentifiers>URI's for beginning and end of the temporal extent:</temporalExtentIdentifiers>
+  <temporalExtentDates>Calendar date or dateTime for begin and end of temporal extent</temporalExtentDates>
+  <boundingBox>WGS84 bounding box</boundingBox>
+  <add-boundingBox>add WGS84 bounding box</add-boundingBox>
+  <extent>Spatial and temporal extent</extent>
+  <dataQualityReport>Data quality report text</dataQualityReport>
+  <keywords>Topic categories, free-text keywords, DDE topic categories</keywords>
+  <firstdetail>Additional properties</firstdetail>
+  <addDoc-help>
+    <div class="row">
+      <div class="col-xs-offset-2 col-xs-8">
+        <p class="help-block">This field can include supplemental information about the information,
+          for example offline ordering instructions, acknowledgements to contributors, maintenance
+          schedules, usage information, or operational environment description</p>
+      </div>
+    </div>
+  </addDoc-help>
+  <geotime-help>
+    <div class="row">
+      <div class="col-xs-offset-2 col-xs-8">
+        <p class="help-block">Temporal extent require at least a text string (name) for a time instant or the beginning of a time interval. The beginning and end of an interval can be specified with a calendar data, numeric age date, or named geologic era. The temporal extent description should be a text statement of the temporal extent. </p>
+      </div>
+    </div>
+  </geotime-help>
+    <!--  end dde added -->
+ 
   <bboxesSection>Geographic coverage</bboxesSection>
   <overviews>Overviews</overviews>
   <metadataInXML>XML</metadataInXML>
@@ -62,22 +122,21 @@
   <linkToPortal>Access to the catalogue</linkToPortal>
   <linkToPortal-help>Read here the full details and access to the data.</linkToPortal-help>
   <citationProposal>Citation proposal</citationProposal>
-  <citationProposal-help>This proposal was automatically generated, check if the metadata authors did not specified custom citation requirements.</citationProposal-help>
-  <citationAdditional>When using this resource in a publication, also cite the related work(s) with:</citationAdditional>
+  <citationProposal-help>This proposal was automatically generated, check if the metadata authors
+    did not specified custom citation requirements.</citationProposal-help>
+  <citationAdditional>When using this resource in a publication, also cite the related work(s)
+    with:</citationAdditional>
   <associatedResources>Associated resources</associatedResources>
 
 
   <add-resource-id>Compute resource identifier</add-resource-id>
-  <add-resource-idHelp>Compose the resource identifier using the catalog URL and
-    the metadata identifier (eg.
-    http://www.organization.org/catalogue/5391bf69-44bc-4ea0-8cc0-6cf6c3bc81ae).
-  </add-resource-idHelp>
+  <add-resource-idHelp>Compose the resource identifier using the catalog URL and the metadata
+    identifier (eg. http://www.organization.org/catalogue/5391bf69-44bc-4ea0-8cc0-6cf6c3bc81ae). </add-resource-idHelp>
   <add-extent-from-geokeywords>Add extent for each keywords</add-extent-from-geokeywords>
-  <add-one-extent-from-geokeywords>Add one extent from all keywords</add-one-extent-from-geokeywords>
-  <add-extent-from-geokeywordsHelp>Analyze each keyword of type place and add
-    matching extent.
-  </add-extent-from-geokeywordsHelp>
-  <extent>Geographic bounding box</extent>
+  <add-one-extent-from-geokeywords>Add one extent from all
+    keywords</add-one-extent-from-geokeywords>
+  <add-extent-from-geokeywordsHelp>Analyze each keyword of type place and add matching extent. </add-extent-from-geokeywordsHelp>
+
   <spatialExtent>Spatial extent</spatialExtent>
   <freeTextKeywords>Other keywords</freeTextKeywords>
   <noThesaurusName>Keywords</noThesaurusName>
