@@ -39,7 +39,7 @@
   <resource>Resource</resource>
   <xml>XML</xml>
   <metadata>Metadata</metadata>
-  <test>Distribution information</test>
+  <dde-distributionInfo>Distribution information</dde-distributionInfo>
   <identificationInfo>Identification</identificationInfo>
   <distributionInfo>Distribution</distributionInfo>
   <dataQualityInfo>Quality</dataQualityInfo>

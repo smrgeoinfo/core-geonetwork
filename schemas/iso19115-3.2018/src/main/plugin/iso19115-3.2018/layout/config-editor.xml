@@ -920,7 +920,7 @@
 
         </section>
       </tab>
-      <tab id="distributionInfo" mode="flat">
+      <tab id="dde-distributionInfo" mode="flat">
         <section> 
           <field xpath="/mdb:MD_Metadata/mdb:distributionInfo/mrd:MD_Distribution/mrd:distributor/mrd:MD_Distributor/mrd:distributorContact" or="distributorContact"
           in="/mdb:MD_Metadata/mdb:distributionInfo/mrd:MD_Distribution/mrd:distributor/mrd:MD_Distributor" del="."/>
