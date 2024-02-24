@@ -801,8 +801,8 @@
     <description></description>
   </element>
   <element name="mdq:abstract">
-    <label>Abstract</label>
-    <description></description>
+    <label>Data quality summary</label>
+    <description>Text summary of any data quality tests or other information to assess quality</description>
   </element>
   <element name="mdq:elementReport">
     <label>Element report</label>
@@ -4294,10 +4294,8 @@
     <label>Specification</label>
   </element>
   <element name="mrl:statement" id="83.0">
-    <label>Statement</label>
-    <description>General explanation of the data producer_s knowledge about the
-      lineage of a
-      dataset
+    <label>Text description of resource lineage/provenance</label>
+    <description>Explanation of the data producers knowledge about the lineage of the resource
     </description>
     <condition>conditional</condition>
   </element>

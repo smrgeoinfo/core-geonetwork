@@ -29,11 +29,12 @@
   <resourceLineageTab>Lineage</resourceLineageTab>
 
   <advanced>Full</advanced>
-  <default>Simple</default>
+
   <simple>Simple</simple>
   <inspire>INSPIRE</inspire>
   <ddeview>DeepTime Digital Earth</ddeview>
   <!-- added -->
+  <gnSimple>Simple</gnSimple>
   <inspireTheme>INSPIRE themes</inspireTheme>
   <inspireThemeMandatory>INSPIRE themes*</inspireThemeMandatory>
   <resource>Resource</resource>
@@ -95,6 +96,7 @@
   <dataQualityReport>Data quality report text</dataQualityReport>
   <keywords>Topic categories, free-text keywords, DDE topic categories</keywords>
   <firstdetail>Additional properties</firstdetail>
+  <DDEacquisitionType>DDE Data acquisition type</DDEacquisitionType>
   <addDoc-help>
     <div class="row">
       <div class="col-xs-offset-2 col-xs-8">
@@ -111,7 +113,18 @@
       </div>
     </div>
   </geotime-help>
-    <!--  end dde added -->
+  
+  <imagery>Image description information</imagery>
+  <operation>Acquistion operations</operation>
+  <image-wavelength>Image acquisition wavelength</image-wavelength>
+  <image-signalGenerator>Excitation signal to produce image</image-signalGenerator>
+  <image-sensor>Acquisition sensor</image-sensor>
+  <image-equipment>Acquisition instrument or equipment</image-equipment>
+  <image-platform>Acquisition platform</image-platform>
+  <sensorIdentifier>Identifier for sensor</sensorIdentifier>
+  <equipmentIdentifier>Identifier for instrument or equipment</equipmentIdentifier>
+  <platformIdentifier>Identifier for platform</platformIdentifier>
+  <!--  end dde added -->
  
   <bboxesSection>Geographic coverage</bboxesSection>
   <overviews>Overviews</overviews>
