@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <editor xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:noNamespaceSchemaLocation="../../../../../../config-editorRev.xsd"
-  xmlns:gn="http://www.fao.org/geonetwork" xmlns:srv="http://standards.iso.org/iso/19115/-3/srv/2.1"
+  xmlns:gn="http://www.fao.org/geonetwork" 
+  xmlns:srv="http://standards.iso.org/iso/19115/-3/srv/2.0"
+
   xmlns:mds="http://standards.iso.org/iso/19115/-3/mds/2.0"
   xmlns:mcc="http://standards.iso.org/iso/19115/-3/mcc/1.0"
   xmlns:mri="http://standards.iso.org/iso/19115/-3/mri/1.0"
@@ -22,9 +24,10 @@
   xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0"
   xmlns:mac="http://standards.iso.org/iso/19115/-3/mac/2.0"
   xmlns:gfc="http://standards.iso.org/iso/19110/gfc/1.1"
-  xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:gml="http://www.opengis.net/gml/3.2"
+  xmlns:gts="http://www.isotc211.org/2005/gts" 
+  xmlns:gml="http://www.opengis.net/gml/3.2"
   xmlns:xlink="http://www.w3.org/1999/xlink">
-
+  <!--  xmlns:srv2="http://standards.iso.org/iso/19115/-3/srv/2.0"-->
   <!-- Form field type configuration. Default is text. -->
   <fields>
     <for name="cit:issueIdentification" use="textarea"/>
@@ -80,6 +83,10 @@
     <for name="gco:Integer" use="number"/>
     <for name="gco:Real" use="number"/>
     <for name="gco:Angle" use="number"/>
+    <for name="gml:timePosition" use="number"/> <!-- smr add -->
+<!--    <for name="gml:name" use="textarea"/>-->
+<!--    <for name="gml:identifier" use="textarea"/>-->
+<!--    <for name="gml:timePosition/@frame" use="textarea"/>-->
     <for name="gco:Boolean" use="checkbox"/>
 
     <for name="gco:Date" use="data-gn-date-picker"/>
@@ -549,10 +556,10 @@
 
     <table for="mcc:MD_BrowseGraphic">
       <header>
-        <col label="name"/>
-        <col label="fileType"/>
-        <col label="description"/>
-        <col label="link"/>
+        <col label="mcc:fileName"/>
+        <col label="mcc:fileType"/>
+        <col label="mcc:fileDescription"/>
+        <col label="cit:linkage"/>
       </header>
       <row>
         <col xpath="mcc:fileName"/>
@@ -561,36 +568,38 @@
         <col xpath="mcc:linkage/cit:CI_OnlineResource/cit:linkage"/>
       </row>
     </table>
-    <table for="mac:MI_Sensor  | mac:MI_Instrument">
+    <table for="mac:MI_Sensor">
       <header>
-        <col label="name"/>
-        <col label="sensorIdentifier"/>
+        <col label="mac:type"/>
+        <col label="mcc:code"/>
       </header>
       <row>
         <col xpath="mac:type"/>
-        <col xpath="mac:identifier/mcc:MD_Identifier/mcc:code/gco:CharacterString"/>
+        <col xpath="mac:identifier/mcc:MD_Identifier/mcc:code"/>
       </row>
     </table>
-    <!--    <table for="mac:MI_Instrument">
+     <table for="mac:MI_Instrument">
       <header>
-        <col label="name"/>
-      <!-\-  <col label="equipmentIdentifier"/>-\->
+        <col label="mac:type"/>
+        <col label="mcc:code"/>
       </header>
       <row>
         <col xpath="mac:type"/>
-        <section  xpath="mac:identifier/mcc:MD_Identifier/mcc:code"/>
+        <col  xpath="mac:identifier/mcc:MD_Identifier/mcc:code"/>
       </row>
-    </table>-->
+    </table>
+    
     <table for="mac:MI_Platform">
       <header>
-        <col label="name"/>
-        <col label="platformIdentifier"/>
+        <col label="mac:description"/>
+        <col label="mcc:code"/>
       </header>
       <row>
         <col xpath="mac:description"/>
-        <col xpath="mac:identifier/mcc:MD_Identifier/mcc:code/gco:CharacterString"/>
+        <col xpath="mac:identifier/mcc:MD_Identifier/mcc:code"/>
       </row>
     </table>
+
     <table for="mcc:MD_Identifier">
       <header>
         <col label="mcc:code"/>
@@ -603,6 +612,19 @@
         <col xpath="mcc:authority/cit:CI_Citation/cit:title"/>
         <col xpath="mcc:codespace"/>
         <col xpath="mcc:description"/>
+      </row>
+    </table>
+    
+    <table for="gml:TimeInstant">
+      <header>
+        <col label="gml:name"/>
+        <col label="gml:identifier"/>
+        <col label="gml:timePosition"/>
+      </header>
+      <row>
+        <col xpath=".//gml:name"/>
+        <col xpath=".//gml:identifier"/>
+        <col xpath="gml:timePosition"/>
       </row>
     </table>
 
@@ -740,7 +762,6 @@
       </tab>
 
       <tab id="firstdetail" mode="flat">
-
         <section>
           <field name="browseGraphic"
             xpath="/mdb:MD_Metadata/mdb:identificationInfo//mri:graphicOverview"/>
@@ -756,6 +777,17 @@
           <field name="additionalDocumentation"
             xpath="/mdb:MD_Metadata/mdb:identificationInfo//mri:supplementalInformation"
             or="supplementalInformation" in="/mdb:MD_Metadata/mdb:identificationInfo/*"/>
+          
+          <action type="add" name=" " btnLabel="Add supplemental information" or="supplementalInformation"
+            in="/*/mdb:identificationInfo/*" if="count(/mdb:MD_Metadata/mdb:identificationInfo//mri:supplementalInformation)=0">
+            <template>
+              <snippet>
+                <mri:supplementalInformation>
+                  <gco:CharacterString></gco:CharacterString>
+                </mri:supplementalInformation>
+              </snippet>
+            </template>
+          </action>
         </section>
       </tab>
 
@@ -763,16 +795,15 @@
         displayIfRecord="count(mdb:MD_Metadata/mdb:metadataScope/*/mdb:name[gco:CharacterString='image'])>0">
         <!--or count(mdb:MD_Metadata/mdb:acquisitionInformation/mac:MI_AcquisitionInformation)>0-->
         <section>
-          <field name="image-wavelength"
-            xpath="/mdb:MD_Metadata/mdb:acquisitionInformation/mac:MI_AcquisitionInformation/mac:operation//mac:description[starts-with(gco:CharacterString,'wavelength')]"/>
-          <field name="image-signalGenerator"
-            xpath="/mdb:MD_Metadata/mdb:acquisitionInformation/mac:MI_AcquisitionInformation/mac:operation//mac:description[starts-with(gco:CharacterString,'signalGenerator')]"/>
-          <field name="image-sensor"
-            xpath="/mdb:MD_Metadata/mdb:acquisitionInformation/mac:MI_AcquisitionInformation/mac:instrument/mac:MI_Sensor | /mdb:MD_Metadata/mdb:acquisitionInformation/mac:MI_AcquisitionInformation/mac:instrument/mac:MI_Instrument"/>
-          <!--          <field name="image-equipment"
-            xpath="/mdb:MD_Metadata/mdb:acquisitionInformation/mac:MI_AcquisitionInformation/mac:instrument/mac:MI_Instrument" />-->
-          <field name="image-platform"
-            xpath="/mdb:MD_Metadata/mdb:acquisitionInformation/mac:MI_AcquisitionInformation/mac:platform/mac:MI_Platform"/>
+          <field name="image-wavelength"            xpath="/mdb:MD_Metadata/mdb:acquisitionInformation/mac:MI_AcquisitionInformation/mac:operation//mac:description[starts-with(gco:CharacterString,'wavelength')]"/>
+          
+          <field name="image-signalGenerator"            xpath="/mdb:MD_Metadata/mdb:acquisitionInformation/mac:MI_AcquisitionInformation/mac:operation//mac:description[starts-with(gco:CharacterString,'signalGenerator')]"/>
+          
+          <field name="image-sensor"      xpath="/mdb:MD_Metadata/mdb:acquisitionInformation/mac:MI_AcquisitionInformation/mac:instrument/mac:MI_Sensor"/>
+          
+          <field name="image-instrument"      xpath="/mdb:MD_Metadata/mdb:acquisitionInformation/mac:MI_AcquisitionInformation/mac:instrument/mac:MI_Instrument"/>
+          
+          <field name="image-platform"   xpath="/mdb:MD_Metadata/mdb:acquisitionInformation/mac:MI_AcquisitionInformation/mac:platform/mac:MI_Platform"/>
           <!--sensor" type="metadata:CharacterString_Type" 
           platform" type="metadata:CharacterString_Type"
           equipment" type="metadata:CharacterString_Type" 
@@ -780,6 +811,21 @@
           wavelength" type="metadata:CharacterString_Type" 
           processingLevel"-->
         </section>
+      </tab>
+
+      <tab id="service"  mode="flat" 
+        displayIfRecord="count(mdb:MD_Metadata/mdb:metadataScope/mdb:MD_MetadataScope/mdb:resourceScope/mcc:MD_ScopeCode[@codeListValue='service'])>0">
+        <section>
+          <field name="serviceType"
+            xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/srv:serviceType"/>
+          <field name="accessProperties"  
+            xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/srv:accessProperties/*/mrd:orderingInstructions"/>
+          <field name="operatedDataset"  xpath="/mdb:MD_Metadata/mdb:identificationInfo/srv:SV_ServiceIdentification/srv:operatedDataset"/>
+          
+          <field name="containsOperation"
+            xpath="//srv:SV_ServiceIdentification/srv:containsOperations/srv:SV_OperationMetadata/srv:operationName"/>          
+        </section>
+        
       </tab>
 
       <tab id="extent" mode="flat">
@@ -797,7 +843,8 @@
           <text ref="geotime-help"/>
           <text ref="horizontalRule"/>
           <action type="add" name=" " btnLabel="Add a calendar date" or="extent"
-            in="/*/mdb:identificationInfo/*">
+            in="/*/mdb:identificationInfo/*" 
+            if="count(/*/mdb:identificationInfo/*/mri:extent/*/gex:temporalElement/*/gex:extent//gml:TimePeriod[.//gml:begin])=0">
             <template>
               <snippet>
                 <mri:extent>
@@ -806,7 +853,7 @@
                       <gex:EX_TemporalExtent>
                         <gex:extent>
                           <gml:TimePeriod>
-                            <gml:description>{{geotime}}</gml:description>
+                            <gml:description>description</gml:description>
                             <gml:beginPosition/>
                             <gml:endPosition/>
                           </gml:TimePeriod>
@@ -818,8 +865,8 @@
               </snippet>
             </template>
           </action>
-          <section name="Temporal extent"
-            xpath="/*/mdb:identificationInfo/*/mri:extent/*/gex:temporalElement/*/gex:extent//gml:TimePeriod[.//gml:beginPosition]"/>
+          <section name="calendarExtent"
+            xpath="/*/mdb:identificationInfo/*/mri:extent/*/gex:temporalElement/*/gex:extent//gml:TimePeriod[.//gml:beginPosition]" />
           <text ref="horizontalRule"/>
           <action type="add" name=" " btnLabel="Add a geologic age" or="extent"
             in="/*/mdb:identificationInfo/*">
@@ -834,15 +881,15 @@
                             <gml:description/>
                             <gml:begin>
                               <gml:TimeInstant>
-                                <gml:identifier>{{beginID}}</gml:identifier>
-                                <gml:name>{{beginName}}</gml:name>
+                                <gml:identifier>http://</gml:identifier>
+                                <gml:name>name</gml:name>
                                 <gml:timePosition frame="Ma before present">1870</gml:timePosition>
                               </gml:TimeInstant>
                             </gml:begin>
                             <gml:end>
                               <gml:TimeInstant>
-                                <gml:identifier>{{beginID}}</gml:identifier>
-                                <gml:name>{{beginName}}</gml:name>
+                                <gml:identifier>http://</gml:identifier>
+                                <gml:name>name</gml:name>
                                 <gml:timePosition frame="Ma before present">1870</gml:timePosition>
                               </gml:TimeInstant>
                             </gml:end>
@@ -855,7 +902,7 @@
               </snippet>
             </template>
           </action>
-          <section name="Geologic age"
+          <section name="geologicAge" 
             xpath="/*/mdb:identificationInfo/*/mri:extent/*/gex:temporalElement/*/gex:extent//gml:TimePeriod[.//gml:begin]"/>
           <text ref="horizontalRule"/>
         </section>
