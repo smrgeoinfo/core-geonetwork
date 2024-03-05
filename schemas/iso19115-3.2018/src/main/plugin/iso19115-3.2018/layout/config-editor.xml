@@ -69,6 +69,7 @@
        comment out to see if this solves problem. -->
     <!--<for name="mdq:standaloneQualityReport" use="textarea"/>-->
     <for name="mdq:abstract" use="textarea"/>
+    <for name="dqm:abstract" use="textarea"/>
     <for name="mdq:statement" use="textarea"/>
     <for name="mdq:evaluationMethodDescription" use="textarea"/>
     <for name="mdq:measureDescription" use="textarea"/>
@@ -768,10 +769,21 @@
           <field name="lineageSummary"
             xpath="/mdb:MD_Metadata/mdb:resourceLineage/mrl:LI_Lineage/mrl:statement" or="statement"
             in="/mdb:MD_Metadata/mdb:resourceLineage/mrl:LI_Lineage"/>
-          <field name="dataQualityReport"
+          
+          <action type="add" name=" " btnLabel="Add data quality suimmary" or="abstract"
+            in="/mdb:MD_Metadata/mdb:dataQualityInfo/dqm:DQ_DataQuality/dqm:standaloneQualityReport/dqm:DQ_StandaloneQualityReportInformation" 
+            if="count(/mdb:MD_Metadata/mdb:dataQualityInfo/dqm:DQ_DataQuality/dqm:standaloneQualityReport/dqm:DQ_StandaloneQualityReportInformation/dqm:abstract)=0">
+            <template>
+              <snippet>
+                <dqm:abstract>
+                  <gco:CharacterString></gco:CharacterString>
+                </dqm:abstract>
+              </snippet>
+            </template>
+          </action><field name="dataQualityReport"
             xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/mdq:DQ_DataQuality/mdq:standaloneQualityReport/mdq:DQ_StandaloneQualityReportInformation/mdq:abstract"
             or="abstract"
-            in="/mdb:MD_Metadata/mdb:dataQualityInfo/*/mdq:DQ_StandaloneQualityReportInformation"/>
+            in="/mdb:MD_Metadata/mdb:dataQualityInfo/mdq:DQ_DataQuality/mdq:standaloneQualityReport/mdq:DQ_StandaloneQualityReportInformation"/>
           <text ref="addDoc-help"
             if="count(/mdb:MD_Metadata/mdb:identificationInfo//mri:supplementalInformation)=0"/>
           <field name="additionalDocumentation"
@@ -934,6 +946,8 @@
         <for name="mdb:contact"/>
         <for name="mcc:processor"/>
         <for name="mrl:statement"/>
+        <for name="mdq:abstract"/>
+        <for name="dqm:abstract"/>
         <!--        <for name="cit:party"/>
         <for name="cit:CI_Individual"/>
         <for name="cit:CI_Organisation"/>-->

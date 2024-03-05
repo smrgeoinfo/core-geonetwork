@@ -24,6 +24,7 @@
         xmlns:mrs="http://standards.iso.org/iso/19115/-3/mrs/1.0"
         xmlns:msr="http://standards.iso.org/iso/19115/-3/msr/2.0"
         xmlns:mdq="http://standards.iso.org/iso/19157/-2/mdq/1.0"
+        xmlns:dqm="http://standards.iso.org/iso/19157/-2/mdq/1.0"
         xmlns:mac="http://standards.iso.org/iso/19115/-3/mac/2.0"
         xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0"
         xmlns:gml="http://www.opengis.net/gml/3.2"
@@ -801,6 +802,10 @@
     <description></description>
   </element>
   <element name="mdq:abstract">
+    <label>Data quality summary</label>
+    <description>Text summary of any data quality tests or other information to assess quality</description>
+  </element>
+  <element name="dqm:abstract">
     <label>Data quality summary</label>
     <description>Text summary of any data quality tests or other information to assess quality</description>
   </element>
