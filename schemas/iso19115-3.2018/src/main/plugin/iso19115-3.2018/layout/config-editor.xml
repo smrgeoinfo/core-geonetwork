@@ -310,30 +310,24 @@
         data-filter='{"root": "cit:CI_Responsibility"}'
         data-variables="cit:role/cit:CI_RoleCode/@codeListValue~{role}"/>
     </for>
-
     <for name="mdb:referenceSystemInfo" addDirective="data-gn-directory-entry-selector">
       <directiveAttributes data-template-add-action="true" data-search-action="true"
         data-template-type="CRS" data-filter='{"root": "mrs:MD_ReferenceSystem"}'
         data-insert-modes=""/>
     </for>
-
-
     <for name="mri:extent" addDirective="data-gn-directory-entry-selector">
       <directiveAttributes data-template-add-action="true" data-search-action="true"
         data-template-type="extent" data-filter='{"root": "gex:EX_Extent"}' data-insert-modes=""/>
     </for>
-
     <for name="mcc:extent" addDirective="data-gn-directory-entry-selector">
       <directiveAttributes data-template-add-action="true" data-search-action="true"
         data-template-type="extent" data-filter='{"root": "gex:EX_Extent"}' data-insert-modes=""/>
     </for>
-
-    <for name="cit:extent" addDirective="data-gn-directory-entry-selector">
+   <for name="cit:extent" addDirective="data-gn-directory-entry-selector">
       <directiveAttributes data-template-add-action="true" data-search-action="true"
         data-template-type="extent" data-filter='{"root": "gex:EX_Extent"}' data-insert-modes=""/>
     </for>
-
-    <for name="cit:logo" addDirective="data-gn-directory-entry-selector">
+   <for name="cit:logo" addDirective="data-gn-directory-entry-selector">
       <directiveAttributes data-template-add-action="true" data-search-action="true"
         data-popup-action="false" data-template-type="logo"
         data-filter='{"root": "mcc:MD_BrowseGraphic"}'/>
@@ -770,7 +764,7 @@
             xpath="/mdb:MD_Metadata/mdb:resourceLineage/mrl:LI_Lineage/mrl:statement" or="statement"
             in="/mdb:MD_Metadata/mdb:resourceLineage/mrl:LI_Lineage"/>
           
-          <action type="add" name=" " btnLabel="Add data quality suimmary" or="abstract"
+          <action type="add" name=" " btnLabel="Add data quality summary" or="abstract"
             in="/mdb:MD_Metadata/mdb:dataQualityInfo/dqm:DQ_DataQuality/dqm:standaloneQualityReport/dqm:DQ_StandaloneQualityReportInformation" 
             if="count(/mdb:MD_Metadata/mdb:dataQualityInfo/dqm:DQ_DataQuality/dqm:standaloneQualityReport/dqm:DQ_StandaloneQualityReportInformation/dqm:abstract)=0">
             <template>
@@ -780,7 +774,8 @@
                 </dqm:abstract>
               </snippet>
             </template>
-          </action><field name="dataQualityReport"
+          </action>
+          <field name="dataQualityReport"
             xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/mdq:DQ_DataQuality/mdq:standaloneQualityReport/mdq:DQ_StandaloneQualityReportInformation/mdq:abstract"
             or="abstract"
             in="/mdb:MD_Metadata/mdb:dataQualityInfo/mdq:DQ_DataQuality/mdq:standaloneQualityReport/mdq:DQ_StandaloneQualityReportInformation"/>
@@ -842,21 +837,40 @@
 
       <tab id="extent" mode="flat">
         <section name="spatialExtent">
-          <field name="levelOfDetail"
-            xpath="/*/mdb:identificationInfo/*/mri:spatialResolution/*//mri:levelOfDetail"
-            or="levelOfDetail" in="/*/mdb:identificationInfo/*"
-            del="ancestor::mri:spatialResolution"/>
+ 
           <field name="boundingBox"
             xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:extent/*/gex:geographicElement/gex:EX_GeographicBoundingBox"/>
           <field
             xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:spatialRepresentationType"/>
+          
+          <action type="add" name=" " btnLabel="Add spatial resolution" or="spatialResolution"
+            in="/mdb:MD_Metadata/mdb:identificationInfo/*" 
+            if="count(mdb:MD_Metadata/mdb:identificationInfo/*/mri:spatialResolution/*//mri:levelOfDetail) = 0">
+            <!-- Note the // in mri:spatialResolution/*//mri:levelOfDetail for the same reason as in temporal element and
+                gml begin/end because there is a choice in the XSD. -->
+            <template>
+              <snippet>
+                <mri:spatialResolution>
+                  <mri:MD_Resolution>
+                    <mri:levelOfDetail>
+                      <gco:CharacterString/>
+                    </mri:levelOfDetail>
+                  </mri:MD_Resolution>
+                </mri:spatialResolution>
+              </snippet>
+            </template>
+          </action>
+          <field name="levelOfDetail"
+            xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:spatialResolution/*//mri:levelOfDetail"
+            del="ancestor::mri:spatialResolution"/>
+
         </section>
         <section name="temporalExtent">
           <text ref="geotime-help"/>
           <text ref="horizontalRule"/>
           <action type="add" name=" " btnLabel="Add a calendar date" or="extent"
             in="/*/mdb:identificationInfo/*" 
-            if="count(/*/mdb:identificationInfo/*/mri:extent/*/gex:temporalElement/*/gex:extent//gml:TimePeriod[.//gml:begin])=0">
+            if="count(/*/mdb:identificationInfo/*/mri:extent/*/gex:temporalElement/*/gex:extent//gml:TimePeriod//gml:begin)=0">
             <template>
               <snippet>
                 <mri:extent>
@@ -878,10 +892,11 @@
             </template>
           </action>
           <section name="calendarExtent"
-            xpath="/*/mdb:identificationInfo/*/mri:extent/*/gex:temporalElement/*/gex:extent//gml:TimePeriod[.//gml:beginPosition]" />
+            xpath="/*/mdb:identificationInfo/*/mri:extent/*/gex:temporalElement/*/gex:extent//gml:TimePeriod//gml:beginPosition" />
           <text ref="horizontalRule"/>
           <action type="add" name=" " btnLabel="Add a geologic age" or="extent"
-            in="/*/mdb:identificationInfo/*">
+            in="/*/mdb:identificationInfo/*"
+            if="count(/*/mdb:identificationInfo/*/mri:extent/*/gex:temporalElement/*/gex:extent//gml:TimePeriod//gml:beginPosition)=0">
             <template>
               <snippet>
                 <mri:extent>
@@ -954,6 +969,7 @@
         <for name="mri:spatialResolution"/>
         <for name="gex:temporalElement"/>
         <for name="cit:alternateTitle"/>
+        <for name="mri:levelOfDetail"/>
         <!-- <for name="mcc:MD_BrowseGraphic"/>-->
       </flatModeExceptions>
 
