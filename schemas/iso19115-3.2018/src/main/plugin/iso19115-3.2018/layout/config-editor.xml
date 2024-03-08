@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <editor xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:noNamespaceSchemaLocation="../../../../../../config-editorRev.xsd"
-  xmlns:gn="http://www.fao.org/geonetwork" 
-  xmlns:srv="http://standards.iso.org/iso/19115/-3/srv/2.0"
-
+  xmlns:gn="http://www.fao.org/geonetwork" xmlns:srv="http://standards.iso.org/iso/19115/-3/srv/2.0"
   xmlns:mds="http://standards.iso.org/iso/19115/-3/mds/2.0"
   xmlns:mcc="http://standards.iso.org/iso/19115/-3/mcc/1.0"
   xmlns:mri="http://standards.iso.org/iso/19115/-3/mri/1.0"
@@ -24,8 +22,7 @@
   xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0"
   xmlns:mac="http://standards.iso.org/iso/19115/-3/mac/2.0"
   xmlns:gfc="http://standards.iso.org/iso/19110/gfc/1.1"
-  xmlns:gts="http://www.isotc211.org/2005/gts" 
-  xmlns:gml="http://www.opengis.net/gml/3.2"
+  xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:gml="http://www.opengis.net/gml/3.2"
   xmlns:xlink="http://www.w3.org/1999/xlink">
   <!--  xmlns:srv2="http://standards.iso.org/iso/19115/-3/srv/2.0"-->
   <!-- Form field type configuration. Default is text. -->
@@ -84,10 +81,7 @@
     <for name="gco:Integer" use="number"/>
     <for name="gco:Real" use="number"/>
     <for name="gco:Angle" use="number"/>
-    <for name="gml:timePosition" use="number"/> <!-- smr add -->
-<!--    <for name="gml:name" use="textarea"/>-->
-<!--    <for name="gml:identifier" use="textarea"/>-->
-<!--    <for name="gml:timePosition/@frame" use="textarea"/>-->
+    <for name="gml:timePosition" use="number"/>
     <for name="gco:Boolean" use="checkbox"/>
 
     <for name="gco:Date" use="data-gn-date-picker"/>
@@ -323,11 +317,11 @@
       <directiveAttributes data-template-add-action="true" data-search-action="true"
         data-template-type="extent" data-filter='{"root": "gex:EX_Extent"}' data-insert-modes=""/>
     </for>
-   <for name="cit:extent" addDirective="data-gn-directory-entry-selector">
+    <for name="cit:extent" addDirective="data-gn-directory-entry-selector">
       <directiveAttributes data-template-add-action="true" data-search-action="true"
         data-template-type="extent" data-filter='{"root": "gex:EX_Extent"}' data-insert-modes=""/>
     </for>
-   <for name="cit:logo" addDirective="data-gn-directory-entry-selector">
+    <for name="cit:logo" addDirective="data-gn-directory-entry-selector">
       <directiveAttributes data-template-add-action="true" data-search-action="true"
         data-popup-action="false" data-template-type="logo"
         data-filter='{"root": "mcc:MD_BrowseGraphic"}'/>
@@ -573,17 +567,17 @@
         <col xpath="mac:identifier/mcc:MD_Identifier/mcc:code"/>
       </row>
     </table>
-     <table for="mac:MI_Instrument">
+    <table for="mac:MI_Instrument">
       <header>
         <col label="mac:type"/>
         <col label="mcc:code"/>
       </header>
       <row>
         <col xpath="mac:type"/>
-        <col  xpath="mac:identifier/mcc:MD_Identifier/mcc:code"/>
+        <col xpath="mac:identifier/mcc:MD_Identifier/mcc:code"/>
       </row>
     </table>
-    
+
     <table for="mac:MI_Platform">
       <header>
         <col label="mac:description"/>
@@ -609,7 +603,7 @@
         <col xpath="mcc:description"/>
       </row>
     </table>
-    
+
     <table for="gml:TimeInstant">
       <header>
         <col label="gml:name"/>
@@ -672,18 +666,72 @@
             xpath="/mdb:MD_Metadata/mdb:identificationInfo//mri:citation/cit:CI_Citation/cit:alternateTitle"
             or="alternateTitle"
             in="/mdb:MD_Metadata/mdb:identificationInfo//mri:citation/cit:CI_Citation"/>
+
           <text ref="horizontalRule"/>
+
+          <action type="add" name=" " btnLabel="Add the resource identifier" or="identifier"
+            if="count(mdb:MD_Metadata/mdb:identificationInfo/*/mri:citation/cit:CI_Citation/cit:identifier) = 0"
+            in="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:citation/cit:CI_Citation">
+            <template>
+              <snippet>
+                <cit:identifier>
+                  <mcc:MD_Identifier>
+                    <mcc:code>
+                      <gco:CharacterString>Insert resource identifier here</gco:CharacterString>
+                    </mcc:code>
+                  </mcc:MD_Identifier>
+                </cit:identifier>
+              </snippet>
+            </template>
+          </action>
+
+          <field xpath="/*/mdb:identificationInfo/*/mri:citation/*/cit:identifier/*/mcc:code"
+            name="ResourceIdentifierCode" del="../.."/>
+
           <field name="ResourceIdentifier"
-            xpath="/mdb:MD_Metadata/mdb:identificationInfo//mri:citation/cit:CI_Citation/cit:identifier"/>
+            xpath="/mdb:MD_Metadata/mdb:identificationInfo//mri:citation/cit:CI_Citation/cit:identifier"
+            if="count(/*/mdb:identificationInfo/*/mri:citation/cit:CI_Citation/cit:identifier) > 0"/>
+
           <text ref="horizontalRule"/>
 
           <field name="ISOresourceScope"
             xpath="/mdb:MD_Metadata/mdb:metadataScope/mdb:MD_MetadataScope/mdb:resourceScope"
             or="resourceScope" in="/mdb:MD_Metadata/mdb:metadataScope/mdb:MD_MetadataScope"/>
+           <action type="add" name=" " btnLabel="Add ISO resource scope" 
+            or="resourceScope"
+            in="/mdb:MD_Metadata/mdb:metadataScope/mdb:MD_MetadataScope">
+            <template>
+              <snippet>
+                <mdb:resourceScope>
+                  <mcc:MD_ScopeCode codeList=" http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_ScopeCode"
+                    codeListValue="dataset">dataset</mcc:MD_ScopeCode>
+                </mdb:resourceScope>
+              </snippet>
+            </template>
+          </action>        
+          
+          
           <field name="DDEresourceType"
             xpath="/mdb:MD_Metadata/mdb:metadataScope/mdb:MD_MetadataScope/mdb:name" or="name"
             in="/mdb:MD_Metadata/mdb:metadataScope/mdb:MD_MetadataScope"
             if="contains('application webApplication collection dataset dataCatalog geographicDataset nonGeographicDataset document article thesis book poster webPage image map photograph explanatoryFigure initiative fieldSession learningResource guide model movie repository semanticResource definedTermSet series service webAPI software sound', mdb:MD_Metadata/mdb:metadataScope/mdb:MD_MetadataScope/mdb:name/gco:CharacterString)"/>
+          <action type="add" name=" " btnLabel="Add DDE resource scope" 
+            or="metadataScope"
+            in="/mdb:MD_Metadata">
+            <template>
+              <snippet>
+                <mdb:MD_MetadataScope>
+                  <mdb:resourceScope gco:nilReason="missing"/>
+                  <mdb:name>
+                    <gco:CharacterString></gco:CharacterString>
+                  </mdb:name>
+                </mdb:MD_MetadataScope>
+              </snippet>
+            </template>
+          </action>   
+          
+          
+          
           <field
             xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:abstract"/>
           <field
@@ -694,9 +742,44 @@
             in="/mdb:MD_Metadata/mdb:identificationInfo//mri:citation/cit:CI_Citation" del="."/>
         </section>
         <section name="keywords">
-
+            <field   xpath="/mdb:MD_Metadata/mdb:identificationInfo//mri:descriptiveKeywords[ not (descendant::mri:thesaurusName) or descendant::mri:thesaurusName//cit:title/gco:CharacterString != 'DDE topic category extensions']" />
+        </section>
+        <section name="controlledkeywords">
+          <field name="DDEacquisitionType"
+            xpath="/*/mdb:acquisitionInformation//mac:operation/mac:MI_Operation/mac:description"
+            or="description"
+            in="/mdb:MD_Metadata//mdb:acquisitionInformation/mac:MI_AcquisitionInformation/mac:operation/mac:MI_Operation"
+            if="contains('geologicalMapping  survey  observation  directObservation  indirectObservation  outcropObservation  remoteSensing  drillBorehole  boreholeCuttingsObservation  boreholeGeophysicalLogMeasurements  drillCoreObservation  laboratoryInstrumentation  dataIntegrationSynthesis  dataFromSinglePublishedDescription  synthesisFromMultipleSources  synthesisOfMultipleOutcropObservations  synthesisOfMultiplePublishedDescriptions  digitaConversionFromPublishedSource  digitalSimulation  dataAndMapCompilation  webResource  other:', mdb:MD_Metadata//mdb:acquisitionInformation//mac:operation/mac:MI_Operation/mac:description/gco:CharacterString)"/>
+          
+          <action type="add" name=" " btnLabel="Add DDE aquisition type" 
+            or="acquisitionInformation"
+            in="/mdb:MD_Metadata">
+            <template>
+              <values>
+                <key label="acquisitionCode" 
+                  xpath="gco:CharacterString">
+                  <codelist name="DDEAcqusitionTypeCode"/>
+                </key>
+              </values>
+              <snippet>
+                
+                  <mac:MI_AcquisitionInformation>
+                    <mac:operation>
+                      <mac:MI_Operation>
+                        <mac:description>
+                          <gco:CharacterString>{{acquisitionCode}}</gco:CharacterString>
+                        </mac:description>
+                        <mac:status gco:nilReason="unknown"/>
+                      </mac:MI_Operation>
+                    </mac:operation>
+                  </mac:MI_AcquisitionInformation>
+              </snippet>
+            </template>
+          </action>
+          
           <field name="ISOtopicCategory"
             xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:topicCategory"/>
+         <text ref="DDEtopicCategory-label"/>
           <field name="DDEtopicCategory"
             xpath="/mdb:MD_Metadata/mdb:identificationInfo//mri:descriptiveKeywords[descendant::mri:thesaurusName//cit:title/gco:CharacterString = 'DDE topic category extensions']"
             templateModeOnly="true">
@@ -705,7 +788,6 @@
                 <key label="ddetopic" xpath="mri:MD_Keywords/mri:keyword/gco:CharacterString"
                   tooltip="mri:ddeTopicCategory">
                   <codelist name="DDETopicCategoryCode"/>
-
                 </key>
               </values>
               <snippet>
@@ -731,28 +813,10 @@
               </snippet>
             </template>
           </field>
-          <field
-            xpath="/mdb:MD_Metadata/mdb:identificationInfo//mri:descriptiveKeywords[ not (descendant::mri:thesaurusName) or descendant::mri:thesaurusName//cit:title/gco:CharacterString != 'DDE topic category extensions']"/>
+          <text ref="horizontalRule"/>
+          <text ref="ddeacquisitiontypehelp"/>
+          
 
-          <field name="DDEacquisitionType"
-            xpath="/mdb:MD_Metadata//mdb:acquisitionInformation//mac:operation/mac:MI_Operation/mac:description"
-            or="description"
-            in="/mdb:MD_Metadata//mdb:acquisitionInformation//mac:operation/mac:MI_Operation"
-            if="contains('geologicalMapping  survey  observation  directObservation  indirectObservation  outcropObservation  remoteSensing  drillBorehole  boreholeCuttingsObservation  boreholeGeophysicalLogMeasurements  drillCoreObservation  laboratoryInstrumentation  dataIntegrationSynthesis  dataFromSinglePublishedDescription  synthesisFromMultipleSources  synthesisOfMultipleOutcropObservations  synthesisOfMultiplePublishedDescriptions  digitaConversionFromPublishedSource  digitalSimulation  dataAndMapCompilation  webResource  other:', mdb:MD_Metadata//mdb:acquisitionInformation//mac:operation/mac:MI_Operation/mac:description/gco:CharacterString)"
-            templateModeOnly="true">
-            <template>
-              <values>
-                <key label="acquisitionCode" xpath="gco:CharacterString">
-                  <codelist name="DDEAcqusitionTypeCode"/>
-                </key>
-              </values>
-              <snippet>
-                <mac:description>
-                  <gco:CharacterString> {{acquisitionCode}} </gco:CharacterString>
-                </mac:description>
-              </snippet>
-            </template>
-          </field>
         </section>
       </tab>
 
@@ -763,14 +827,14 @@
           <field name="lineageSummary"
             xpath="/mdb:MD_Metadata/mdb:resourceLineage/mrl:LI_Lineage/mrl:statement" or="statement"
             in="/mdb:MD_Metadata/mdb:resourceLineage/mrl:LI_Lineage"/>
-          
+
           <action type="add" name=" " btnLabel="Add data quality summary" or="abstract"
-            in="/mdb:MD_Metadata/mdb:dataQualityInfo/dqm:DQ_DataQuality/dqm:standaloneQualityReport/dqm:DQ_StandaloneQualityReportInformation" 
+            in="/mdb:MD_Metadata/mdb:dataQualityInfo/dqm:DQ_DataQuality/dqm:standaloneQualityReport/dqm:DQ_StandaloneQualityReportInformation"
             if="count(/mdb:MD_Metadata/mdb:dataQualityInfo/dqm:DQ_DataQuality/dqm:standaloneQualityReport/dqm:DQ_StandaloneQualityReportInformation/dqm:abstract)=0">
             <template>
               <snippet>
                 <dqm:abstract>
-                  <gco:CharacterString></gco:CharacterString>
+                  <gco:CharacterString/>
                 </dqm:abstract>
               </snippet>
             </template>
@@ -784,13 +848,14 @@
           <field name="additionalDocumentation"
             xpath="/mdb:MD_Metadata/mdb:identificationInfo//mri:supplementalInformation"
             or="supplementalInformation" in="/mdb:MD_Metadata/mdb:identificationInfo/*"/>
-          
-          <action type="add" name=" " btnLabel="Add supplemental information" or="supplementalInformation"
-            in="/*/mdb:identificationInfo/*" if="count(/mdb:MD_Metadata/mdb:identificationInfo//mri:supplementalInformation)=0">
+
+          <action type="add" name=" " btnLabel="Add supplemental information"
+            or="supplementalInformation" in="/*/mdb:identificationInfo/*"
+            if="count(/mdb:MD_Metadata/mdb:identificationInfo//mri:supplementalInformation)=0">
             <template>
               <snippet>
                 <mri:supplementalInformation>
-                  <gco:CharacterString></gco:CharacterString>
+                  <gco:CharacterString/>
                 </mri:supplementalInformation>
               </snippet>
             </template>
@@ -802,15 +867,20 @@
         displayIfRecord="count(mdb:MD_Metadata/mdb:metadataScope/*/mdb:name[gco:CharacterString='image'])>0">
         <!--or count(mdb:MD_Metadata/mdb:acquisitionInformation/mac:MI_AcquisitionInformation)>0-->
         <section>
-          <field name="image-wavelength"            xpath="/mdb:MD_Metadata/mdb:acquisitionInformation/mac:MI_AcquisitionInformation/mac:operation//mac:description[starts-with(gco:CharacterString,'wavelength')]"/>
-          
-          <field name="image-signalGenerator"            xpath="/mdb:MD_Metadata/mdb:acquisitionInformation/mac:MI_AcquisitionInformation/mac:operation//mac:description[starts-with(gco:CharacterString,'signalGenerator')]"/>
-          
-          <field name="image-sensor"      xpath="/mdb:MD_Metadata/mdb:acquisitionInformation/mac:MI_AcquisitionInformation/mac:instrument/mac:MI_Sensor"/>
-          
-          <field name="image-instrument"      xpath="/mdb:MD_Metadata/mdb:acquisitionInformation/mac:MI_AcquisitionInformation/mac:instrument/mac:MI_Instrument"/>
-          
-          <field name="image-platform"   xpath="/mdb:MD_Metadata/mdb:acquisitionInformation/mac:MI_AcquisitionInformation/mac:platform/mac:MI_Platform"/>
+          <field name="image-wavelength"
+            xpath="/mdb:MD_Metadata/mdb:acquisitionInformation/mac:MI_AcquisitionInformation/mac:operation//mac:description[starts-with(gco:CharacterString,'wavelength')]"/>
+
+          <field name="image-signalGenerator"
+            xpath="/mdb:MD_Metadata/mdb:acquisitionInformation/mac:MI_AcquisitionInformation/mac:operation//mac:description[starts-with(gco:CharacterString,'signalGenerator')]"/>
+
+          <field name="image-sensor"
+            xpath="/mdb:MD_Metadata/mdb:acquisitionInformation/mac:MI_AcquisitionInformation/mac:instrument/mac:MI_Sensor"/>
+
+          <field name="image-instrument"
+            xpath="/mdb:MD_Metadata/mdb:acquisitionInformation/mac:MI_AcquisitionInformation/mac:instrument/mac:MI_Instrument"/>
+
+          <field name="image-platform"
+            xpath="/mdb:MD_Metadata/mdb:acquisitionInformation/mac:MI_AcquisitionInformation/mac:platform/mac:MI_Platform"/>
           <!--sensor" type="metadata:CharacterString_Type" 
           platform" type="metadata:CharacterString_Type"
           equipment" type="metadata:CharacterString_Type" 
@@ -820,31 +890,33 @@
         </section>
       </tab>
 
-      <tab id="service"  mode="flat" 
+      <tab id="service" mode="flat"
         displayIfRecord="count(mdb:MD_Metadata/mdb:metadataScope/mdb:MD_MetadataScope/mdb:resourceScope/mcc:MD_ScopeCode[@codeListValue='service'])>0">
         <section>
           <field name="serviceType"
             xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/srv:serviceType"/>
-          <field name="accessProperties"  
+          <field name="accessProperties"
             xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/srv:accessProperties/*/mrd:orderingInstructions"/>
-          <field name="operatedDataset"  xpath="/mdb:MD_Metadata/mdb:identificationInfo/srv:SV_ServiceIdentification/srv:operatedDataset"/>
-          
+          <field name="operatedDataset"
+            xpath="/mdb:MD_Metadata/mdb:identificationInfo/srv:SV_ServiceIdentification/srv:operatedDataset"/>
+
           <field name="containsOperation"
-            xpath="//srv:SV_ServiceIdentification/srv:containsOperations/srv:SV_OperationMetadata/srv:operationName"/>          
+            xpath="//srv:SV_ServiceIdentification/srv:containsOperations/srv:SV_OperationMetadata/srv:operationName"
+          />
         </section>
-        
+
       </tab>
 
       <tab id="extent" mode="flat">
         <section name="spatialExtent">
- 
+
           <field name="boundingBox"
             xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:extent/*/gex:geographicElement/gex:EX_GeographicBoundingBox"/>
           <field
             xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:spatialRepresentationType"/>
-          
+
           <action type="add" name=" " btnLabel="Add spatial resolution" or="spatialResolution"
-            in="/mdb:MD_Metadata/mdb:identificationInfo/*" 
+            in="/mdb:MD_Metadata/mdb:identificationInfo/*"
             if="count(mdb:MD_Metadata/mdb:identificationInfo/*/mri:spatialResolution/*//mri:levelOfDetail) = 0">
             <!-- Note the // in mri:spatialResolution/*//mri:levelOfDetail for the same reason as in temporal element and
                 gml begin/end because there is a choice in the XSD. -->
@@ -869,7 +941,7 @@
           <text ref="geotime-help"/>
           <text ref="horizontalRule"/>
           <action type="add" name=" " btnLabel="Add a calendar date" or="extent"
-            in="/*/mdb:identificationInfo/*" 
+            in="/*/mdb:identificationInfo/*"
             if="count(/*/mdb:identificationInfo/*/mri:extent/*/gex:temporalElement/*/gex:extent//gml:TimePeriod//gml:begin)=0">
             <template>
               <snippet>
@@ -892,7 +964,7 @@
             </template>
           </action>
           <section name="calendarExtent"
-            xpath="/*/mdb:identificationInfo/*/mri:extent/*/gex:temporalElement/*/gex:extent//gml:TimePeriod//gml:beginPosition" />
+            xpath="/*/mdb:identificationInfo/*/mri:extent/*/gex:temporalElement/*/gex:extent//gml:TimePeriod//gml:beginPosition"/>
           <text ref="horizontalRule"/>
           <action type="add" name=" " btnLabel="Add a geologic age" or="extent"
             in="/*/mdb:identificationInfo/*"
@@ -929,7 +1001,7 @@
               </snippet>
             </template>
           </action>
-          <section name="geologicAge" 
+          <section name="geologicAge"
             xpath="/*/mdb:identificationInfo/*/mri:extent/*/gex:temporalElement/*/gex:extent//gml:TimePeriod[.//gml:begin]"/>
           <text ref="horizontalRule"/>
         </section>

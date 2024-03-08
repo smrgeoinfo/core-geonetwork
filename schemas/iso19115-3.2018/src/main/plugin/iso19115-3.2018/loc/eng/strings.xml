@@ -62,9 +62,7 @@
   <ISOtopicCategory>ISO topic category</ISOtopicCategory>
   <DDEtopicCategory-label>
     <div class="row">
-      <div class="col-xs-offset-2 col-xs-8">
         <p class="help-block">DDE extended topic category</p>
-      </div>
     </div>
   </DDEtopicCategory-label>
   <horizontalRule>
@@ -74,6 +72,11 @@
   <DDEtopicCategory>DDE extended topic category</DDEtopicCategory>
   <MetadataIdentifier>Metadata identifier</MetadataIdentifier>
   <ResourceIdentifier>Resource identifier and authority</ResourceIdentifier>
+  <ResourceIdentifierCode>Resource identifier code</ResourceIdentifierCode>
+  <authority>authority</authority>
+  <code>code</code>
+  <codeSpace>codeSpace</codeSpace>
+  <description>description</description>
   <ISOresourceScope>ISO resource type</ISOresourceScope>
   <DDEresourceType>DDE resource type</DDEresourceType>
   <browseGraphic>Thumbnail image</browseGraphic>
@@ -94,7 +97,8 @@
   <add-boundingBox>add WGS84 bounding box</add-boundingBox>
   <extent>Spatial and temporal extent</extent>
   <dataQualityReport>Data quality report text</dataQualityReport>
-  <keywords>Topic categories, free-text keywords, DDE topic categories</keywords>
+  <controlledkeywords>Topic categories, DDE topic categories</controlledkeywords>
+  <keywords>Free-text keywords</keywords>
   <firstdetail>Additional properties</firstdetail>
   <DDEacquisitionType>DDE Data acquisition type</DDEacquisitionType>
   <addDoc-help>
@@ -114,6 +118,7 @@
     </div>
   </geotime-help>
   
+  <ddeacquisitiontypehelp>DDE aquisition type-- terms to categorize data acquisition methods</ddeacquisitiontypehelp>
   <imagery>Image description information</imagery>
   <operation>Acquistion operations</operation>
   <image-wavelength>Image acquisition wavelength</image-wavelength>
