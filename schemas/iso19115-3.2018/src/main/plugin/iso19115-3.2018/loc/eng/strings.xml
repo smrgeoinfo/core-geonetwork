@@ -49,11 +49,11 @@
   <referenceSystemInfo>Ref. system</referenceSystemInfo>
   <contentInfo>Content</contentInfo>
   <portrayalCatalogueInfo>Portrayal</portrayalCatalogueInfo>
-  <metadataConstraints>Md. constraints</metadataConstraints>
-  <metadataMaintenance>Md. maintenance</metadataMaintenance>
+  <metadataConstraints>Metadata constraints</metadataConstraints>
+  <metadataMaintenance>Metadata maintenance</metadataMaintenance>
   <applicationSchemaInfo>Schema info</applicationSchemaInfo>
-  <acquisitionInformation>Acquisition info</acquisitionInformation>
-  <qualityMeasures>Q. measures</qualityMeasures>
+  <acquisitionInformation>Acquisition information</acquisitionInformation>
+  <qualityMeasures>Quality measures</qualityMeasures>
   <additionalDocumentation>Other documentation</additionalDocumentation>
 
   <!-- dde ADDED -->
@@ -79,6 +79,8 @@
   <description>description</description>
   <ISOresourceScope>ISO resource type</ISOresourceScope>
   <DDEresourceType>DDE resource type</DDEresourceType>
+  <resourceType>ISO resource type and name; DDE resource types</resourceType>
+  <scopeName>Free text name for resource type</scopeName>
   <browseGraphic>Thumbnail image</browseGraphic>
   <detail>Resource description details</detail>
   <spatialInfo>Geospatial properties</spatialInfo>
@@ -129,6 +131,17 @@
   <sensorIdentifier>Identifier for sensor</sensorIdentifier>
   <equipmentIdentifier>Identifier for instrument or equipment</equipmentIdentifier>
   <platformIdentifier>Identifier for platform</platformIdentifier>
+  <accessProperties>Access instructions</accessProperties>
+  <resourceDates>Dates in resource history, e.g. publication, revision, deprecation...</resourceDates>
+  <metadatametadata>Metadata about metadata</metadatametadata>
+  <metadatadates>Dates in metadata history</metadatadates>
+  <ddedefaultlocale>Note DDE requires metadata to be in English language, and use UTF-8 character encoding.  Metadata using other languages or character encoding might not be processed correctly for discovery</ddedefaultlocale>
+  <metadatacontact>provide contact information to report problems with the metadata contact</metadatacontact>
+  <resourceconstraints>Resource access and usage constraints</resourceconstraints>
+  <metadataprofile>Metadata profile</metadataprofile>
+  <metadataprofiletext>The profile for DDE metadata MUST be 'DDE S01-2023: Geosciences Information Metadata'</metadataprofiletext>
+  <wavelengthsignalgenerator>prefix the wavelength information with 'wavelength: ', and the signal generator information with 'signalGenerator: ', or the harvesting process won't correctly identifie the information</wavelengthsignalgenerator>
+  <platform-help>Platform description should reference the instruments included in the platform, and the sensors associated with each instrument used for data acquisition</platform-help>
   <!--  end dde added -->
  
   <bboxesSection>Geographic coverage</bboxesSection>
