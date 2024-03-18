@@ -624,11 +624,11 @@
   <views>
 
     <view name="ddeview" class="gn-label-above-input gn-indent-bluescale" default="true">
-      <!--      <sidePanel>
-        <directive data-gn-need-help="creating-metadata"/>
+      <sidePanel>
+        <!-- <directive data-gn-need-help="creating-metadata"/>  -->
         <directive data-gn-overview-manager="" data-file-types=".png,.gif,.jpeg,.jpg"/>
         
-        <directive data-gn-distribution-resources-panel="gnCurrentEdit.metadata"
+        <!--<directive data-gn-distribution-resources-panel="gnCurrentEdit.metadata"
           data-mode="viewConfig.distributionConfig.layout || ''" data-editor-config="default"
           data-related-config="[{
           title: 'API',
@@ -646,7 +646,7 @@
           title: 'links',
           filter:'-protocol:OGC.*|REST|ESRI:.*|atom.*|.*DOWNLOAD.*|DB:.*|FILE:.* AND -function:legend|featureCatalogue|dataQualityReport',
           editActions: ['addOnlinesrc#links']
-          }]"/>
+          }]"/>-->
         
         <directive data-gn-onlinesrc-list=""
           data-types="sibling|associated|source|dataset|service"/>
@@ -657,7 +657,7 @@
         <directive data-gn-validation-report=""/>
         
         <directive data-gn-suggestion-list=""/>
-      </sidePanel>-->
+      </sidePanel>
 
       <tab id="basicmetadata" default="true" mode="flat">
         <section name="basicmetadata">
@@ -1305,7 +1305,7 @@ xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/mdq:DQ_DataQuality/mdq:standaloneQua
         </section>
         
         <text><hr/></text>
-        <section name="Target datasets">
+        <section name="Target datasets" xmlns:srv="http://standards.iso.org/iso/19115/-3/srv/2.1">
           <field name="operatedDataset"
             xpath="/mdb:MD_Metadata/mdb:identificationInfo/srv:SV_ServiceIdentification/srv:operatedDataset" or="operatedDataset"
             in="/mdb:MD_Metadata/mdb:identificationInfo/srv:SV_ServiceIdentification" del="."/>
@@ -1347,7 +1347,7 @@ xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/mdq:DQ_DataQuality/mdq:standaloneQua
              </template>
            </action>
         </section>
-        <section name="Service operations">
+        <section name="Service operations" xmlns:srv="http://standards.iso.org/iso/19115/-3/srv/2.1">
           <field name="containsOperation"
             xpath="//srv:SV_ServiceIdentification/srv:containsOperations/srv:SV_OperationMetadata/srv:operationName"
             or="operationName"
@@ -1372,7 +1372,6 @@ xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/mdq:DQ_DataQuality/mdq:standaloneQua
             </template>
           </action>
         </section>
-
       </tab>
       
 <!-- related resources -->
@@ -1419,6 +1418,7 @@ xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/mdq:DQ_DataQuality/mdq:standaloneQua
           </action>
         </section>
       </tab>
+
 <!-- distributions   -->
       <tab id="dde-distributionInfo" mode="flat">
         <section forEach="/mdb:MD_Metadata/mdb:distributionInfo">
